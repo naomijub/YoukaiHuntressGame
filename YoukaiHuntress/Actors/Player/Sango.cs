@@ -14,6 +14,8 @@ namespace YoukaiHuntress.Actors.Player
         public StateManager state { get; set; }
         public Vector2 jumpVector { get; set; }
         public bool hasJumped { get; set; }
+        public bool grounded { get; set; }
+        public Boomerang boomerang { get; set; }
 
         public Sango(StateManager state) : base() {
             this.state = state;
@@ -21,6 +23,7 @@ namespace YoukaiHuntress.Actors.Player
             position = new Vector2(36,534);
             origin = position + new Vector2(15, 21);
             hasJumped = false;
+            grounded = true;
         }
 
         public override void Draw(SpriteBatch sb, GameTime gameTime)

@@ -89,7 +89,7 @@ namespace YoukaiHuntress
             GraphicsDevice.Clear(Color.DarkCyan);
             spriteBatch.Begin();
 
-            checkregions(spriteBatch);
+            //checkregions(spriteBatch);
             stateManager.Draw(spriteBatch, gameTime);
             
             spriteBatch.End();

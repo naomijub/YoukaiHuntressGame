@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using YoukaiHuntress.Components;
 
 namespace YoukaiHuntress.LevelManager
 {
@@ -18,6 +19,7 @@ namespace YoukaiHuntress.LevelManager
         Rectangle source;
         Vector2 position;
         public IList<Rectangle> collisionRectangles { get; set; }
+        public IList<Heart> hearts { get; set; }
 
         public Map(Manager manager, ContentManager content)
         {
@@ -26,7 +28,7 @@ namespace YoukaiHuntress.LevelManager
             texture = content.Load<Texture2D>("Tiles_32x32");
             area = new Point(32, 32);
         }
-
+        
         public void ChangeLevel(string name)
         {
             for (int i = 0; i < manager.levels.Count; i++)
@@ -42,8 +44,7 @@ namespace YoukaiHuntress.LevelManager
                 }
             }
         }
-        public void Update(Vector2 playerOrigin) {
-            Point XY0 = XY(playerOrigin.ToPoint());
+        public void Update() {
             collisionRectangles = new List<Rectangle>();
 
             for (int y = 0; y < 20; y++)
@@ -52,11 +53,18 @@ namespace YoukaiHuntress.LevelManager
                 {
                     int i = x + y * 60;
                     //Console.Write(currentLevel.data[i]+" ");
-                    if (currentLevel.data[i] != 0 && currentLevel.data[i] != 29)
+                    if (currentLevel.data[i] != 0 && currentLevel.data[i] != 29 && currentLevel.data[i] != 25 && currentLevel.data[i] != 26 &&
+                        currentLevel.data[i] != 53 && currentLevel.data[i] != 54)
                     {
                         //Console.Write(x+" ");
-                        position = new Vector2(32 * x, (y * 32));
-                        collisionRectangles.Add(new Rectangle(position.ToPoint(), new Point(32, 32)));
+                        position = new Vector2(32 * x - 1, (y * 32));
+                        collisionRectangles.Add(new Rectangle(position.ToPoint(), new Point(34, 32)));
+                        
+                    }
+                    if (currentLevel.data[i] == 25 || currentLevel.data[i] == 26 ||
+                        currentLevel.data[i] == 53 | currentLevel.data[i] == 54) {
+                     
+                        slopeRectangles(currentLevel.data[i], x, y);
                         
                     }
                 }
@@ -65,15 +73,37 @@ namespace YoukaiHuntress.LevelManager
             
         }
 
-        public void Draw(SpriteBatch sb, Vector2 playerOrigin)
+        private void slopeRectangles(int code, int x, int y)
         {
-            Point XY0 = XY(playerOrigin.ToPoint());
-            //Console.WriteLine(currentLevel.data.Length);
-            
+            switch (code) {
+                case 25: collisionRectangles.Add(new Rectangle(new Point(x * 32, y * 32 + 2), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 4, y * 32 + 4), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 8, y * 32 + 6), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 12, y * 32 + 8), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 16, y * 32 + 10), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 20, y * 32 + 12), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 24, y * 32 + 14), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 28, y * 32 + 16), new Point(4, 8)));
+                    break;
+                case 26:
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32, y * 32 + 2 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 4, y * 32 + 4 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 8, y * 32 + 6 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 12, y * 32 + 8 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 16, y * 32 + 10 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 20, y * 32 + 12 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 24, y * 32 + 14 + 16), new Point(4, 8)));
+                    collisionRectangles.Add(new Rectangle(new Point(x * 32 + 28, y * 32 + 16 + 16), new Point(4, 8)));
+                    break;
+            }
+        }
+
+        public void Draw(SpriteBatch sb)
+        {
 
             for (int y = 0; y < 20; y++)
             {
-                for (int x = 0; x < 30; x++) {
+                for (int x = 0; x < 60; x++) {
                     int i = x + y * 60;
                     //Console.Write(currentLevel.data[i]+" ");
                     if (currentLevel.data[i] != 0)
@@ -86,25 +116,18 @@ namespace YoukaiHuntress.LevelManager
                 }
                 //Console.WriteLine();
             }
-            //Console.WriteLine();
+            foreach (Heart hrt in hearts) {
+                hrt.Draw(sb);
+            }
             
         }
 
-        public Point XY(Point XY0) {
-            int x = 0, y = 0;
-            if (XY0.X <= 3)
-            {
-                x = 0;
-            }
-            else if (XY0.X > 30)
-            {
-                x = 30;
-            }
-            else {
-                x = XY0.X;
-            }
-
-            return new Point(x, y);
+        private void SetHearts(ContentManager content)
+        {
+            hearts = new List<Heart>();
+            hearts.Add(new Heart(new Vector2(264, 448), content.Load<Texture2D>("heart")));
+            hearts.Add(new Heart(new Vector2(616, 330), content.Load<Texture2D>("heart")));
+            hearts.Add(new Heart(new Vector2(1896, 426), content.Load<Texture2D>("heart")));
         }
     }
 }

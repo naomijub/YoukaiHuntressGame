@@ -30,14 +30,14 @@ namespace YoukaiHuntress.Level
 
         public void Draw(SpriteBatch sb, GameTime gameTime)
         {
-            map.Draw(sb, new Vector2(3, 20));
+            map.Draw(sb);
             sango.Draw(sb, gameTime);
         }
 
         public void Enter()
         {
             map.ChangeLevel(level);
-            map.Update(sango.origin);
+            map.Update();
         }
 
         public void Leave()
@@ -53,9 +53,9 @@ namespace YoukaiHuntress.Level
         public void Update(GameTime gameTime, InputHandler inputHandler)
         {
             sango.Update(gameTime, inputHandler);
-            map.Update(sango.origin);
-            collider.Collide(map.collisionRectangles,sango);
-            //collider.Gravity(map.collisionRectangles, sango);
+            map.Update();
+            collider.Collide(map.collisionRectangles, sango);
+            collider.Gravity(map.collisionRectangles, sango);
         }
     }
 }

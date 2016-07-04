@@ -43,9 +43,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actors\Actor.cs" />
+    <Compile Include="Actors\Boomerang.cs" />
+    <Compile Include="Actors\Player\AttackState.cs" />
+    <Compile Include="Actors\Player\GrabState.cs" />
     <Compile Include="Actors\Player\Sango.cs" />
+    <Compile Include="Actors\Player\WaitState.cs" />
     <Compile Include="Actors\Player\WalkIdleState.cs" />
     <Compile Include="Components\Collider.cs" />
+    <Compile Include="Components\Heart.cs" />
+    <Compile Include="Components\Lives.cs" />
     <Compile Include="Components\State.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="LevelManager\Layers.cs" />
