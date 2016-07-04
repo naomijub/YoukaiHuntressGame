@@ -32,10 +32,12 @@ namespace YoukaiHuntress.Components
             sb.Draw(heart, position, Color.White);
         }
 
-        public void Update(Rectangle sango) {
+        public bool Update(Rectangle sango) {
             if (sango.Intersects(collision)) {
                 isAvailable = false;
+                return true;
             }
+            return false;
         }
     }
 }

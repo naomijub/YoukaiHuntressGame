@@ -17,6 +17,7 @@ namespace YoukaiHuntress.Level
         public Map map { get; set; }
         public string level { get; set; }
         public Actor sango { get; set; }
+        Lives lives;
         public InputHandler inputHandler;
         Collider collider;
 
@@ -26,6 +27,7 @@ namespace YoukaiHuntress.Level
             level = "L1";
             this.inputHandler = inputHandler;
             collider = new Collider();
+            lives = new Lives();
         }
 
         public void Draw(SpriteBatch sb, GameTime gameTime)
@@ -48,6 +50,9 @@ namespace YoukaiHuntress.Level
         public void LoadContent(ContentManager content)
         {
             sango = new Sango(new StateManager(content, inputHandler));
+            Sango aux = (Sango)sango;
+            aux.LoadContent(content);
+            map.SetHearts(content);
         }
 
         public void Update(GameTime gameTime, InputHandler inputHandler)
@@ -56,6 +61,7 @@ namespace YoukaiHuntress.Level
             map.Update();
             collider.Collide(map.collisionRectangles, sango);
             collider.Gravity(map.collisionRectangles, sango);
+            lives.Update(map.hearts, sango);
         }
     }
 }

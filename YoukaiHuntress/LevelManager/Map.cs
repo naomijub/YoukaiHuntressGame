@@ -122,7 +122,7 @@ namespace YoukaiHuntress.LevelManager
             
         }
 
-        private void SetHearts(ContentManager content)
+        public void SetHearts(ContentManager content)
         {
             hearts = new List<Heart>();
             hearts.Add(new Heart(new Vector2(264, 448), content.Load<Texture2D>("heart")));

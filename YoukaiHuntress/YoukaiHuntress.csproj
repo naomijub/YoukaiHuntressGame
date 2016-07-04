@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Boomerang.cs" />
+    <Compile Include="Actors\Enemy\Youkai.cs" />
     <Compile Include="Actors\Player\AttackState.cs" />
     <Compile Include="Actors\Player\GrabState.cs" />
     <Compile Include="Actors\Player\Sango.cs" />
@@ -83,7 +84,6 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Actors\Enemy\" />
     <Folder Include="JSON\" />
   </ItemGroup>
   <ItemGroup>
