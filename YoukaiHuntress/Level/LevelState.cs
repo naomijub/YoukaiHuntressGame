@@ -63,22 +63,24 @@ namespace YoukaiHuntress.Level
             aux.LoadContent(content);
             map.SetHearts(content);
 
-
             Actor bat = new Youkai(new StateManager(content, inputHandler));
             Actor oni = new Youkai(new StateManager(content, inputHandler));
             Actor oni2 = new Youkai(new StateManager(content, inputHandler));
+            Actor oni3 = new Youkai(new StateManager(content, inputHandler));
             Youkai auxBat = (Youkai)bat;
             Youkai auxOni = (Youkai)oni;
             Youkai auxOni2 = (Youkai)oni2;
+            Youkai auxOni3 = (Youkai)oni3;
             auxBat.setState(new BatState(auxBat, auxBat.state));
             auxOni.setState(new OniState(auxOni, auxOni.state, new Vector2(1120, 480)));
-            auxOni2.setState(new OniState(auxOni, auxOni.state, new Vector2(704, 320)));
+            auxOni2.setState(new OniState(auxOni2, auxOni2.state, new Vector2(704, 320)));
+            auxOni3.setState(new OniState(auxOni3, auxOni3.state, new Vector2(1728, 288)));
             youkais.Add(auxBat);
             youkais.Add(auxOni);
             youkais.Add(auxOni2);
-
+            youkais.Add(auxOni3);
         }
-
+        
         public void Update(GameTime gameTime, InputHandler inputHandler)
         {
             sango.Update(gameTime, inputHandler);
