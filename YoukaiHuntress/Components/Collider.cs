@@ -18,9 +18,9 @@ namespace YoukaiHuntress.Components
     {
         public Collider() { }
 
-        public void Collide(IList<Rectangle> collisionRectangles, Actor actors) {
+        public void Collide(IList<Rectangle> collisionRectangles, IList<Rectangle> spikes, Actor actors) {
             Sango sangoAux = (Sango)actors;
-
+            checkHit(spikes, actors);
             if (!sangoAux.hasJumped)
             {
                 regularCollision(collisionRectangles, actors);
@@ -31,11 +31,40 @@ namespace YoukaiHuntress.Components
             
         }
 
+        private void checkHit(IList<Rectangle> spikes, Actor actors)
+        {
+            foreach (Rectangle spike in spikes) {
+                if (actors.fullCollision.Intersects(spike)) {
+                    Sango aux = (Sango)actors;
+                    aux.lives -= 1;
+                    aux.position = new Vector2(36, 534);
+                }
+            }
+        }
+
+        //public bool collideTriangles(IList<Triangle> triangles, Actor actor) {
+        //    bool collide = false;
+        //    foreach (Triangle tri in triangles) {
+        //        if (tri.isPointInsideTriangle(actor.baseX1)) {
+        //            collide = true;
+        //            //actor.nextMoveX = 0;
+        //        }
+        //        if (tri.isPointInsideTriangle(actor.baseX0))
+        //        {
+        //            collide = true;
+        //            //actor.nextMoveX = 0;
+        //        }
+        //    }
+
+        //    return collide;
+        //}
+
         private void jumpCollision(IList<Rectangle> collisionRectangles, Actor actors)
         {
             Sango sangoJump = (Sango)actors;
             bool xCollide = false;
             bool yCollide = false;
+            
 
             foreach (Rectangle rect in collisionRectangles)
             {
@@ -78,7 +107,7 @@ namespace YoukaiHuntress.Components
                 if (actors.xCollision.Intersects(rect))
                 {
                     xCollide = true;
-                    Console.WriteLine("X : " + rect.ToString() + " Sango: " + actors.xCollision.ToString());
+                    //Console.WriteLine("X : " + rect.ToString() + " Sango: " + actors.xCollision.ToString());
 
                 }
                 if (actors.yCollision.Intersects(rect))
@@ -87,6 +116,7 @@ namespace YoukaiHuntress.Components
                     //Console.WriteLine("Y : "+rect.ToString() + " Sango: " + sango.xCollision.ToString());
                 }
             }
+
             
                 if (!xCollide && !yCollide)
                 {
@@ -126,6 +156,9 @@ namespace YoukaiHuntress.Components
                         }
                         else if (sango.fullCollision.X > rect.X) {
                             moveX = 1.0f;
+                        }
+                        if (sango.fullCollision.Y + sango.fullCollision.Height > rect.Y) {
+                            sango.nextMoveY = -1.0f;
                         }
                     }
                 }

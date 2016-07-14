@@ -87,19 +87,31 @@ namespace YoukaiHuntress.Actors.Player
             }
             else if (inputHandler.KeyDown(Keys.Left) || inputHandler.buttonDown(Buttons.DPadLeft))
             {
-                sango.nextMoveX = -2;
-                sango.effect = SpriteEffects.FlipHorizontally;
-                sango.hasJumped = false;
-                sango.jumpVector = Vector2.Zero;
-                actorState = ActorState.left;
+                if (sango.position.X > 5)
+                {
+                    sango.nextMoveX = -2;
+                    sango.effect = SpriteEffects.FlipHorizontally;
+                    sango.hasJumped = false;
+                    sango.jumpVector = Vector2.Zero;
+                    actorState = ActorState.left;
+                }
+                else {
+                    sango.nextMoveX = 0;
+                }
             }
             else if (inputHandler.KeyDown(Keys.Right) || inputHandler.buttonDown(Buttons.DPadRight))
             {
-                sango.nextMoveX = +2;
-                sango.effect = SpriteEffects.None;
-                sango.hasJumped = false;
-                sango.jumpVector = Vector2.Zero;
-                actorState = ActorState.right;
+                if (sango.position.X < 1900)
+                {
+                    sango.nextMoveX = +2;
+                    sango.effect = SpriteEffects.None;
+                    sango.hasJumped = false;
+                    sango.jumpVector = Vector2.Zero;
+                    actorState = ActorState.right;
+                }
+                else {
+                    sango.nextMoveX = 0;
+                }
             }
             else if (inputHandler.KeyDown(Keys.Space) || inputHandler.buttonDown(Buttons.A))
             {
@@ -120,35 +132,45 @@ namespace YoukaiHuntress.Actors.Player
         }
 
         public void Jump(GameTime gameTime) {
-            if (sango.jumpVector.Y < 15)
-            {
-                sango.jumpVector = new Vector2(sango.jumpVector.X, sango.jumpVector.Y + 1);
-                sango.grounded = false;
-            }
-            else {
-                sango.hasJumped = false;
-            }
+            
+                if (sango.jumpVector.Y < 15)
+                {
+                    if (sango.position.X > 5 && sango.position.X < 1900)
+                    {
+                        sango.jumpVector = new Vector2(sango.jumpVector.X, sango.jumpVector.Y + 1);
+                        sango.grounded = false;
+                    }
+                    else {
+                    sango.jumpVector = new Vector2(0, sango.jumpVector.Y + 1);
+                    sango.grounded = false;
+                    }
+                }
+                else {
+                    sango.hasJumped = false;
+                }
+            
         }
 
         public void SetCollisionReagion() {
-            Vector2 auxPosition = sango.position + new Vector2(10, 0);
-            Point auxArea = new Point(20, 42);
-            sango.fullCollision = new Rectangle(auxPosition.ToPoint(), auxArea);
+            Vector2 auxPosition = sango.position;
+            sango.fullCollision = new Rectangle(auxPosition.ToPoint(), sango.area);
             if (!sango.hasJumped)
             {
                 Vector2 auxPosX = auxPosition + new Vector2(sango.nextMoveX, 0);
                 Vector2 auxPosY = auxPosition + new Vector2(0, sango.nextMoveY);
-                sango.xCollision = new Rectangle(auxPosX.ToPoint(), auxArea);
-                sango.yCollision = new Rectangle(auxPosY.ToPoint(), auxArea);
+                sango.xCollision = new Rectangle(auxPosX.ToPoint(), sango.area);
+                sango.yCollision = new Rectangle(auxPosY.ToPoint(), sango.area);
             }
             else {
                 Vector2 auxPosX = auxPosition + new Vector2(sango.jumpVector.X, 0);
                 Vector2 auxPosY = auxPosition + new Vector2(0, sango.jumpVector.Y);
-                sango.xCollision = new Rectangle(auxPosX.ToPoint(), auxArea);
-                sango.yCollision = new Rectangle(auxPosY.ToPoint(), auxArea);
+                sango.xCollision = new Rectangle(auxPosX.ToPoint(), sango.area);
+                sango.yCollision = new Rectangle(auxPosY.ToPoint(), sango.area);
             }
+            //sango.baseX0 = new Vector2(sango.position.X, sango.position.Y + sango.area.Y);
+            //sango.baseX1 = new Vector2(sango.position.X + sango.area.X, sango.position.Y + sango.area.Y);
         }
-
+        
         private void SetSource()
         {
             if (actorState == ActorState.idle)

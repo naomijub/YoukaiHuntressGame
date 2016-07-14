@@ -15,6 +15,8 @@ namespace YoukaiHuntress.Actors
         public Texture2D texture { get; set; }
         public Vector2 position { get; set; }
         public Vector2 origin { get; set; }
+        //public Vector2 baseX0 { get; set; }
+        //public Vector2 baseX1 { get; set; }
         public Point area { get; set; }
         public float nextMoveX { get; set; }
         public float nextMoveY { get; set; }

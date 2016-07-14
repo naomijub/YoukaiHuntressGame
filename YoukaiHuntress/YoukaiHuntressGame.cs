@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using YoukaiHuntress.LevelManager;
 using YoukaiHuntress.Level;
+using YoukaiHuntress.Components;
 using System;
 
 namespace YoukaiHuntress
@@ -38,6 +39,7 @@ namespace YoukaiHuntress
             // TODO: Add your initialization logic here
             manager = new Manager();
             inputHandler = new InputHandler(GamePad.GetState(PlayerIndex.One), Keyboard.GetState());
+            Camera2D.SetViewport(GraphicsDevice.Viewport);
             base.Initialize();
         }
 
@@ -87,11 +89,10 @@ namespace YoukaiHuntress
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkCyan);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Camera2D.GetViewMatrix());
 
             //checkregions(spriteBatch);
             stateManager.Draw(spriteBatch, gameTime);
-            
             spriteBatch.End();
             // TODO: Add your drawing code here
 

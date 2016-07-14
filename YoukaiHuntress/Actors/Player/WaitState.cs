@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using YoukaiHuntress.Components;
+using Microsoft.Xna.Framework.Audio;
 
 namespace YoukaiHuntress.Actors.Player
 {
@@ -15,6 +16,8 @@ namespace YoukaiHuntress.Actors.Player
         public Sango sango { get; set; }
         public StateManager state { get; set; }
         public float distance { get; set; }
+        SoundEffect boomerangSnd;
+        SoundEffectInstance boomerangSndInstance;
 
         public WaitState(Sango sango, StateManager state)
         {
@@ -30,17 +33,20 @@ namespace YoukaiHuntress.Actors.Player
 
         public void Enter()
         {
+            boomerangSndInstance = boomerangSnd.CreateInstance();
+            boomerangSndInstance.Play();
             sango.area = new Point(24, 40);
         }
 
         public void Leave()
         {
-            
+            boomerangSndInstance.Stop();
         }
 
         public void LoadContent(ContentManager content)
         {
             sango.texture = content.Load<Texture2D>("Sango");
+            boomerangSnd = content.Load<SoundEffect>("Boomerang");
         }
 
         public void Update(GameTime gameTime, InputHandler inputHandler)
