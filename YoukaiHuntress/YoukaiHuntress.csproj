@@ -45,6 +45,7 @@
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Boomerang.cs" />
     <Compile Include="Actors\Enemy\BatState.cs" />
+    <Compile Include="Actors\Enemy\GyuState.cs" />
     <Compile Include="Actors\Enemy\OniState.cs" />
     <Compile Include="Actors\Enemy\Youkai.cs" />
     <Compile Include="Actors\Objects\Object.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Actors\Player\Sango.cs" />
     <Compile Include="Actors\Player\WaitState.cs" />
     <Compile Include="Actors\Player\WalkIdleState.cs" />
+    <Compile Include="Components\ActorCollider.cs" />
     <Compile Include="Components\Camera2D.cs" />
     <Compile Include="Components\Collider.cs" />
     <Compile Include="Components\Heart.cs" />

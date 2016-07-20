@@ -76,7 +76,7 @@ namespace YoukaiHuntress.Actors.Player
 
         public void Timer(GameTime gameTime)
         {
-            float duration = 0.1f;
+            float duration = 0.09f;
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (currentTime >= duration)
