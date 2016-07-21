@@ -11,12 +11,22 @@ using YoukaiHuntress.Actors;
 using YoukaiHuntress.Actors.Player;
 using YoukaiHuntress.Level;
 using YoukaiHuntress.LevelManager;
+using Microsoft.Xna.Framework.Audio;
 
 namespace YoukaiHuntress.Components
 {
     public class ActorCollider
     {
+        SoundEffect hitSnd;
+        SoundEffectInstance hitSndInstance;
+
         public ActorCollider() { }
+
+        public void LoadContent(ContentManager content)
+        {
+            hitSnd = content.Load<SoundEffect>("Hit");
+            hitSndInstance = hitSnd.CreateInstance();
+        }
 
         public void collide(Actor sango, IList<Actor> youkais) {
             Sango aux = (Sango)sango;
@@ -27,6 +37,7 @@ namespace YoukaiHuntress.Components
                 }
                 if (aux.boomerang != null) {
                     if (aux.boomerang.fullCollision.Intersects(youkais[i].fullCollision)) {
+                        hitSndInstance.Play();
                         youkais.Remove(youkais[i]);
                     }
                 }

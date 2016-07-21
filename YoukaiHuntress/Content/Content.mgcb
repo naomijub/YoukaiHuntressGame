@@ -109,3 +109,9 @@
 /processorParam:Quality=Best
 /build:No Victim.mp3
 
+#begin Hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Hit.wav
+

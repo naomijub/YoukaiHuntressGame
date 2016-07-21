@@ -71,6 +71,7 @@ namespace YoukaiHuntress.Level
             aux.LoadContent(content);
             map.SetHearts(content);
             levelSnd = content.Load<SoundEffect>("No Victim");
+            actCollider.LoadContent(content);
 
             Actor bat = new Youkai(new StateManager(content, inputHandler));
             Actor oni = new Youkai(new StateManager(content, inputHandler));

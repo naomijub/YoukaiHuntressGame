@@ -42,23 +42,6 @@ namespace YoukaiHuntress.Components
             }
         }
 
-        //public bool collideTriangles(IList<Triangle> triangles, Actor actor) {
-        //    bool collide = false;
-        //    foreach (Triangle tri in triangles) {
-        //        if (tri.isPointInsideTriangle(actor.baseX1)) {
-        //            collide = true;
-        //            //actor.nextMoveX = 0;
-        //        }
-        //        if (tri.isPointInsideTriangle(actor.baseX0))
-        //        {
-        //            collide = true;
-        //            //actor.nextMoveX = 0;
-        //        }
-        //    }
-
-        //    return collide;
-        //}
-
         private void jumpCollision(IList<Rectangle> collisionRectangles, Actor actors)
         {
             Sango sangoJump = (Sango)actors;
